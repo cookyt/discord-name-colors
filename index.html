@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<head>
+  <link rel="stylesheet" href="style.css"></style>
+  <script type="module" src="color-chip.mjs"></script>
+</head>
+
+<title>Discord Name Color Preview</title>
+<body>
+  <div>
+    <h1>Discord Name Color Preview</h1>
+
+    <p>
+      Preview what your Discord username looks like, given a new color. This also
+      prints the WCAG contrast ratio results for your color. A bad contrast ratio
+      won't be easily readable on all displays. But hey, maybe that's what you
+      want!
+    </p>
+
+    <label for="usernameInput">Username: </label>
+    <input id="usernameInput" placeholder="ExampleUsername"></input>
+
+    <div id="chip-container">
+      <div class="chip-col">
+        <color-chip color-code="A1" name-color="#fb1d7a"></color-chip>
+        <color-chip color-code="A2" name-color="#ff7bb2"></color-chip>
+      </div>
+
+      <div class="chip-col">
+        <color-chip color-code="B1" name-color="#f918f9"></color-chip>
+        <color-chip color-code="B2" name-color="#ff81ff"></color-chip>
+        <color-chip color-code="B3" name-color="#ffc5ff"></color-chip>
+      </div>
+
+      <div class="chip-col">
+        <color-chip color-code="C1" name-color="#803c99"></color-chip>
+        <color-chip color-code="C2" name-color="#7e5fa8"></color-chip>
+        <color-chip color-code="C3" name-color="#a995c7"></color-chip>
+      </div>
+
+      <div class="chip-col">
+        <color-chip color-code="D1" name-color="#6b3eff"></color-chip>
+        <color-chip color-code="D2" name-color="#a16eff"></color-chip>
+        <color-chip color-code="D3" name-color="#a99bff"></color-chip>
+      </div>
+
+      <div class="chip-col">
+        <color-chip color-code="E1" name-color="#3257fe"></color-chip>
+        <color-chip color-code="E2" name-color="#0081bc"></color-chip>
+      </div>
+
+      <div class="chip-col">
+        <color-chip color-code="F1" name-color="#007782"></color-chip>
+        <color-chip color-code="F2" name-color="#089b9b"></color-chip>
+      </div>
+
+      <div class="chip-col">
+        <color-chip color-code="G1" name-color="#009eba"></color-chip>
+        <color-chip color-code="G2" name-color="#00c6e9"></color-chip>
+        <color-chip color-code="G3" name-color="#a8d9ea"></color-chip>
+      </div>
+
+      <div class="chip-col">
+        <color-chip color-code="H1" name-color="#00b3a8"></color-chip>
+        <color-chip color-code="H2" name-color="#82cdbe"></color-chip>
+        <color-chip color-code="H3" name-color="#a5d1b5"></color-chip>
+      </div>
+
+      <div class="chip-col">
+        <color-chip color-code="I1" name-color="#00982b"></color-chip>
+        <color-chip color-code="I2" name-color="#00c437"></color-chip>
+        <color-chip color-code="I3" name-color="#4ed674"></color-chip>
+      </div>
+
+      <div class="chip-col">
+        <color-chip color-code="J1" name-color="#9ea64f"></color-chip>
+        <color-chip color-code="J2" name-color="#a3c149"></color-chip>
+      </div>
+
+      <div class="chip-col">
+        <color-chip color-code="K1" name-color="#fbb038"></color-chip>
+        <color-chip color-code="K2" name-color="#ffda69"></color-chip>
+      </div>
+
+      <div class="chip-col">
+        <color-chip color-code="L1" name-color="#ff4e00"></color-chip>
+        <color-chip color-code="L2" name-color="#ff7a05"></color-chip>
+      </div>
+
+      <div class="chip-col">
+        <color-chip color-code="M1" name-color="#ed1a3b"></color-chip>
+        <color-chip color-code="M2" name-color="#e94d88"></color-chip>
+        <color-chip color-code="M3" name-color="#f69997"></color-chip>
+      </div>
+    </div>
+
+    <script type="module">
+      function updateUsername() {
+        console.debug('updateUsername called');
+        const usernameInput = document.querySelector("#usernameInput");
+        const usernameText = (usernameInput.value === "")
+            ? null
+            : usernameInput.value;
+        const nodes = document.querySelectorAll("color-chip");
+        for (/** @type {ColorChip} */ const node of nodes) {
+          node.setOrRemoveAttribute('username', usernameText);
+        }
+      }
+
+      updateUsername();
+      document.querySelector("#usernameInput")
+          .addEventListener('input', () => updateUsername());
+    </script>
+  </div>
+</body>

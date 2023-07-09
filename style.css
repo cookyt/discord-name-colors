@@ -1,0 +1,31 @@
+body {
+  --dark-background-color: #313338;
+  --dark-foreground-color: white;
+
+  --light-background-color: #ffffff;
+  --light-foreground-color: black;
+
+  --theme-background-color: var(--dark-background-color);
+  --theme-foreground-color: var(--dark-foreground-color);
+
+  font-family: sans-serif;
+  background-color: var(--theme-background-color);
+}
+
+body * { color: var(--theme-foreground-color); }
+
+body>div {
+  width: 75%;
+  margin: 0 auto;
+}
+
+input { color: black; }
+
+color-chip {
+  width: fit-content;
+}
+#chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 3em;
+}
