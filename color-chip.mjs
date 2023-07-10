@@ -28,8 +28,12 @@ class ColorChip extends HTMLElement {
         background-color: var(--name-color);
       }
 
-      #username {
+      #username { color: var(--name-color); }
+      #hexcolor {
+        display: block;
         color: var(--name-color);
+        font-size: smaller;
+        font-family: monospace;
       }
 
       #wrapper {
@@ -46,12 +50,14 @@ class ColorChip extends HTMLElement {
         <contrast-chip></contrast-chip>
       </div>
       <span id="username"></span>
+      <span id="hexcolor"></span>
     `;
 
     this.colorCodeNode = this.wrapperNode.querySelector('#colorcode');
     /** @type {ContrastChip} */
     this.contrastNode = this.wrapperNode.querySelector('contrast-chip');
     this.usernameNode = this.wrapperNode.querySelector('#username');
+    this.hexcolorNode = this.wrapperNode.querySelector('#hexcolor');
   }
 
   /**
@@ -84,6 +90,7 @@ class ColorChip extends HTMLElement {
     this.attributeStyleMap.set('--name-color', this.nameColor());
     this.colorCodeNode.innerText = this.colorCode();
     this.usernameNode.innerText = this.username();
+    this.hexcolorNode.innerText = this.nameColor();
     this.updateContrast();
   }
 
