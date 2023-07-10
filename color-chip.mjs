@@ -1,4 +1,4 @@
-import { WcagContrastLevel, computeColorContrast } from "./wcag-contrast.mjs";
+import { ContrastChip } from "./contrast-chip.mjs";
 
 class ColorChip extends HTMLElement {
   constructor() {
@@ -28,30 +28,6 @@ class ColorChip extends HTMLElement {
         background-color: var(--name-color);
       }
 
-      #contrast {
-        display: inline-block;
-        height: 100%;
-        background-color: hsl(221.54deg 12.31% 4.92%);
-        text-align: center;
-      }
-      #contrast::after {
-        display: inline-block;
-        padding-left: .1em;
-        padding-right: .1em;
-      }
-      .good-contrast::after {
-        content: 'contrast:' attr(data-contrast-ratio) ' :)';
-        color: #a0ffa0;
-      }
-      .meh-contrast::after {
-        content: 'contrast:' attr(data-contrast-ratio) ' :/';
-        color: #efef7b;
-      }
-      .bad-contrast::after {
-        content: 'contrast:' attr(data-contrast-ratio) ' :(';
-        color: #ff6161;
-      }
-
       #username {
         color: var(--name-color);
       }
@@ -67,13 +43,14 @@ class ColorChip extends HTMLElement {
     this.wrapperNode.innerHTML = `
       <div id="colorcode-container">
         <span id="colorcode"></span>
-        <span id="contrast"></span>
+        <contrast-chip></contrast-chip>
       </div>
       <span id="username"></span>
     `;
 
     this.colorCodeNode = this.wrapperNode.querySelector('#colorcode');
-    this.contrastNode = this.wrapperNode.querySelector('#contrast');
+    /** @type {ContrastChip} */
+    this.contrastNode = this.wrapperNode.querySelector('contrast-chip');
     this.usernameNode = this.wrapperNode.querySelector('#username');
   }
 
@@ -130,47 +107,25 @@ class ColorChip extends HTMLElement {
   }
 
   /**
-   * Recomputes the contrast of this color-chip and updates the chip's
-   * internal styles to reflect this. Call this any time the name-color or
-   * background color changes.
+   * Updates this node's contrast-chip by re-fetching the current background and
+   * foreground colors.
    */
   updateContrast() {
-    const {ratio, maxLevel} = this._computeContrast();
-    this.contrastNode.setAttribute('data-contrast-ratio', ratio.toFixed(2));
-    this.contrastNode.setAttribute('data-wcag-max-level', maxLevel);
-    switch (maxLevel) {
-      case WcagContrastLevel.AA_LARGE:
-        this.contrastNode.className = 'meh-contrast';
-        break;
-      case WcagContrastLevel.AA:
-      case WcagContrastLevel.AAA:
-        this.contrastNode.className = 'good-contrast';
-        break;
-      default:
-        this.contrastNode.className = 'bad-contrast';
-    }
-  }
-
-  /**
-   * @returns {{ratio: number, maxLevel: WcagContrastLevel?}}
-   */
-  _computeContrast() {
+    console.debug('updateContrast on', this.colorCode())
     const allBackgroundColors =
       this.computedStyleMap().get('--theme-background-color');
     if (!allBackgroundColors) {
       console.debug(
           'This chip has no background color, we cannot compute the contrast.');
-      return {ratio: 1, maxLevel: null}
+      this.contrastNode.removeAttribute('background-color');
+      this.contrastNode.removeAttribute('foreground-color');
+    } else {
+      this.contrastNode.setAttribute('background-color', allBackgroundColors[0]);
+      this.contrastNode.setAttribute('foreground-color', this.nameColor());
     }
-
-    const backgroundColor = allBackgroundColors[0];
-    const foregroundColor = this.nameColor();
-    const ratio = computeColorContrast(foregroundColor, backgroundColor);
-    const maxLevel = WcagContrastLevel.strictestLevelOfRatio(ratio);
-    console.debug('contrast ratio of fg color', foregroundColor, 'to bg',
-                  backgroundColor, 'is', ratio, 'at WCAG level', maxLevel);
-    return {ratio, maxLevel};
   }
 }
 
 customElements.define('color-chip', ColorChip);
+
+export {ColorChip};
