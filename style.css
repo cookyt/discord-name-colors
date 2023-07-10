@@ -29,3 +29,19 @@ color-chip {
   flex-wrap: wrap;
   row-gap: 3em;
 }
+
+#inputPanel {
+  width: 30%;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  row-gap: 0.5em;
+  justify-items: start;
+}
+#inputPanel label {
+  justify-self: end;
+  white-space: nowrap;
+}
+#inputPanel label::after {
+  content: ': ';
+  margin: 0 0.2em;
+}

@@ -4,6 +4,49 @@
 <head>
   <link rel="stylesheet" href="style.css"></style>
   <script type="module" src="color-chip.mjs"></script>
+
+  <script type="module">
+    function updateUsername() {
+      console.debug('updateUsername called');
+      const usernameInput = document.querySelector("#usernameInput");
+      const usernameText = (usernameInput.value === "")
+          ? null
+          : usernameInput.value;
+      const nodes = document.querySelectorAll("color-chip");
+      for (/** @type {ColorChip} */ const node of nodes) {
+        node.setOrRemoveAttribute('username', usernameText);
+      }
+    }
+
+    function updateBackgroundColor() {
+      console.debug('updateBackgroundColor called');
+      /** @type {HTMLInputElement} */
+      const body = document.querySelector('body');
+      const lightMode = document.querySelector("#lightModeInput");
+      if (lightMode.checked) {
+        body.style.setProperty('--theme-background-color',
+                                'var(--light-background-color)');
+        body.style.setProperty('--theme-foreground-color',
+                                'var(--light-foreground-color)');
+      } else {
+        body.style.setProperty('--theme-background-color',
+                                'var(--dark-background-color)');
+        body.style.setProperty('--theme-foreground-color',
+                                'var(--dark-foreground-color)');
+      }
+      const nodes = document.querySelectorAll("color-chip");
+      for (/** @type {ColorChip} */ const node of nodes) {
+        node.updateContrast();
+      }
+    }
+
+    updateBackgroundColor();
+    updateUsername();
+    document.querySelector("#usernameInput")
+        .addEventListener('input', () => updateUsername());
+    document.querySelector("#lightModeInput")
+        .addEventListener('input', () => updateBackgroundColor());
+  </script>
 </head>
 
 <title>Discord Name Color Preview</title>
@@ -18,8 +61,13 @@
       want!
     </p>
 
-    <label for="usernameInput">Username: </label>
-    <input id="usernameInput" placeholder="ExampleUsername"></input>
+    <div id="inputPanel">
+      <label for="usernameInput">Username</label>
+      <input id="usernameInput" placeholder="ExampleUsername"></input>
+
+      <label for="lightModeInput">Light Mode</label>
+      <input id="lightModeInput" type="checkbox"></input>
+    </div>
 
     <div id="chip-container">
       <div class="chip-col">
@@ -94,23 +142,5 @@
         <color-chip color-code="M3" name-color="#f69997"></color-chip>
       </div>
     </div>
-
-    <script type="module">
-      function updateUsername() {
-        console.debug('updateUsername called');
-        const usernameInput = document.querySelector("#usernameInput");
-        const usernameText = (usernameInput.value === "")
-            ? null
-            : usernameInput.value;
-        const nodes = document.querySelectorAll("color-chip");
-        for (/** @type {ColorChip} */ const node of nodes) {
-          node.setOrRemoveAttribute('username', usernameText);
-        }
-      }
-
-      updateUsername();
-      document.querySelector("#usernameInput")
-          .addEventListener('input', () => updateUsername());
-    </script>
   </div>
 </body>

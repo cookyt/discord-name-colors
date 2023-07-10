@@ -107,7 +107,7 @@ class ColorChip extends HTMLElement {
     this.attributeStyleMap.set('--name-color', this.nameColor());
     this.colorCodeNode.innerText = this.colorCode();
     this.usernameNode.innerText = this.username();
-    this._updateContrast();
+    this.updateContrast();
   }
 
   /** Sets the given attribute, or removes it if the value is `null`. */
@@ -134,7 +134,7 @@ class ColorChip extends HTMLElement {
    * internal styles to reflect this. Call this any time the name-color or
    * background color changes.
    */
-  _updateContrast() {
+  updateContrast() {
     const {ratio, maxLevel} = this._computeContrast();
     this.contrastNode.setAttribute('data-contrast-ratio', ratio.toFixed(2));
     this.contrastNode.setAttribute('data-wcag-max-level', maxLevel);
