@@ -8,8 +8,10 @@ class ContrastChip extends HTMLElement {
       #contrast {
         display: inline-block;
         height: 100%;
+        width: 100%;
         background-color: hsl(221.54deg 12.31% 4.92%);
         text-align: center;
+        vertical-align: middle;
       }
       #contrast::after {
         display: inline-block;
@@ -23,7 +25,7 @@ class ContrastChip extends HTMLElement {
       }
       .good-contrast::after {
         content: 'contrast:' attr(data-contrast-ratio) ' :)';
-        color: #a0ffa0;
+        color: #80d680;
       }
       .meh-contrast::after {
         content: 'contrast:' attr(data-contrast-ratio) ' :/';

@@ -96,8 +96,11 @@ document.querySelector('#newColorInputButton')
     .addEventListener('click', () => appendColorChip());
 document.querySelector('#newColorInput')
     .addEventListener('input', () => {
-      updateContrastPreview();
       updateColorTextFromPicker();
+      updateContrastPreview();
     });
 document.querySelector('#newColorInputText')
-    .addEventListener('input', () => updateColorPickerFromText());
+    .addEventListener('input', () => {
+      updateColorPickerFromText();
+      updateContrastPreview();
+    });

@@ -50,10 +50,13 @@ color-chip {
 
 #colorAdder {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(150px, 1fr) 1fr;
   column-gap: 0.5em;
+  row-gap: 0.2em;
   justify-items: start;
 }
+#newColorInput { width: 100%; }
+#contrastPreview { width: 100%; }
 #colorAdder :nth-child(odd) {
   justify-self: end;
 }
